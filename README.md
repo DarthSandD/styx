@@ -65,7 +65,6 @@ Great means tested and passed in a real task. Good means installed but not yet t
 | darren-labs-router-SKILL.md | Original router skill |
 | darren-labs-verify-SKILL.md | Original verification gate |
 | INDEX.md | Skill library index, by category |
-| SECURITY.md | Security and hardening rules |
 
 This repo contains only Darren Labs original work. Upstream skills, such as ECC, Superpowers, Waza, and REA, remain theirs, under their licenses, and their skill bodies are not copied here.
 
