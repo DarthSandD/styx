@@ -66,16 +66,8 @@ Great means tested and passed in a real task. Good means installed but not yet t
 | darren-labs-verify-SKILL.md | Original verification gate |
 | INDEX.md | Skill library index, by category |
 | SECURITY.md | Security and hardening rules |
-| HARDENING.md | What was checked, and what is not in this repo |
 
 This repo contains only Darren Labs original work. Upstream skills, such as ECC, Superpowers, Waza, and REA, remain theirs, under their licenses, and their skill bodies are not copied here.
-
-## Security, in short
-
-- No secrets, keys, tokens, passwords, or signed URLs in this repo.
-- No install scripts, no hooks, no MCP installs, no remote code execution.
-- No personal emails, phone numbers, addresses, internal hosts, or IPs in this repo.
-- Install scope is skill files only. See HARDENING.md for the full check.
 
 ## License
 
