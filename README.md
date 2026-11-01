@@ -1,83 +1,82 @@
-# Styx, by Darren Labs
+# Styx
 
-Styx is a skill route, called by one command, not a separate repo and not a mega skill.
+**One command to route skills. Call Styx, then your task.**
 
-Problem it solves: a library of skills is useless if the agent
-loads all of them, loads conflicting ones together, or loads a
-high-star skill that is wrong for the task. Styx picks
-the right skill, combines compatible ones, and skips conflicting
-ones, with a reason stated every time.
+Styx picks the right skill for the job, combines compatible ones, and skips conflicting ones, with a reason every time. You do not load a whole library, and you do not guess which skill to use.
 
-## What it is
+![Styx hero](styx-hero.webp)
 
-- A library: 134 SKILL.md files, as of 2026-11-02, in coding,
-  design, video, review, security, deploy, and docs.
-- A router: darren-labs-router, original to Darren Labs.
-- A verification gate: darren-labs-verify, original to Darren Labs.
-- A ranking: Great, tested and passed, versus Good, installed
-  but untested, versus Parked, with a reason.
-- A clash rule: at most 3 skills per task, winner only on a
-  clash, skipped skill stated.
+## Quick start
 
-## How routing works, in 5 steps
+In Claude Code, type:
 
-1. Intent in one line. What is actually being asked?
-2. Rank candidates. Test evidence first, then specificity,
-   then relevance, then stars, then token cost. Stars alone
-   never win.
-3. Clash check. If two skills claim the same primary action,
-   load only the winner. Example: waza-check wins over
-   requesting-code-review for a diff review, because it is
-   report-only and matches Darren's approval rules.
-4. Combine, at most 3, in sequence only. Domain skill first,
-   quality bar second, verification third. Frontend-design
-   plus design-loop is build first, critique second, not
-   both as equals.
-5. Verify before saying done. Run the test, read the output,
-   state the evidence. A reply alone is not proof.
+```
+Styx, build a landing page
+```
 
-## Great versus worst, with evidence
+Or, as a slash command:
 
-Great, tested and passed in this workspace:
-- test-driven-development: red-green run, 2 tests OK
-- design-loop: picked and loaded for a beautiful UI task
-- waza-check: picked and loaded, review before shipping
-- rea, by morluto: version 6.7.0, analyze exit 0, 31 AST nodes
-- frontend-design, karpathy-guidelines, context-budget,
-  coding-standards
+```
+/styx, build a landing page
+```
 
-Parked, with reason, not deleted:
-- academic-pptx: proprietary license
-- Graphify and OpenMontage: no loadable SKILL.md
-- cc-switch: clashes with 9Router
-- deep-research: needs paid firecrawl and exa MCP
+That is it. Styx is the entry point. It loads at most 3 skills for that task, never all of them.
 
-## Credit, honestly
+Styx works in Claude Code only, and it always loads on Auto unless you say otherwise.
 
-Styx does not rebrand other people's work. Upstream
-skills, such as ECC, Superpowers, Waza, and REA, remain theirs,
-under their licenses. This repo contains only Darren Labs
-original work: the router, the verify gate, the routing logic,
-and the index. Upstream skill bodies are not copied here.
+## Three modes
 
-## Install scope
+| Mode | How to call it | What it does |
+| :--- | :--- | :--- |
+| Styx Auto | `Styx, build a landing page` | Default. Styx picks the skill, ranks it, and combines it if needed. |
+| Styx Manual Pick | `Styx manual, frontend-design, build a landing page` | You name the skill. Styx loads exactly that one, no auto override. |
+| Styx Combine | `Styx combine, frontend-design plus design-loop, build a landing page` | Compatible skills in sequence, at most 3, never conflicting pairs together. |
 
-SKILL.md only. No installers, no hooks, no MCP installs, no
-spending, no publishing, no GitHub pushes, no external sends,
-unless a separate explicit instruction approves that item.
+## Examples
 
-## Status
+- `Styx, review this diff before shipping`
+  Picks waza-check, skips requesting-code-review, and says why.
 
-Local skill pack, built by Muse, 2026-11-02. Styx is not a
-separate GitHub repo to push. How to call it: see USAGE.md.
+- `Styx manual, manim-video, make a simple video`
+  Loads only manim-video. First rule: define the core visual thesis in one sentence.
 
-## Three modes, one Styx
+- `Styx combine, karpathy plus TDD plus verify, write a todo CLI`
+  Loads karpathy-guidelines, then test-driven-development, then verify, in that order. Test first, then code, then check.
 
-- Styx - Auto: default. Styx picks, ranks, clashes, and combines.
-- Styx - Manual Pick: user picks. Styx loads exactly that skill,
-  no auto override.
-- Styx - Combine: compatible skills in sequence, at most 3,
-  never conflicting pairs together.
+## How Styx picks, in plain language
 
-Note: Styx here is the routing system. A separate Telegram bot
-with a similar name is not this repo.
+1. Read your task in one line.
+2. Rank skills by test evidence first, then by how specific they are, then by relevance, then by stars, then by token cost. Stars alone never win.
+3. If two skills clash, keep only the winner, and say which one was skipped and why.
+4. If no skill fits, say so. Never invent a skill, never load all of them.
+5. Verify before saying done, with the exact test output as evidence.
+
+Great means tested and passed in a real task. Good means installed but not yet tested. Parked means skipped for a reason, like a proprietary license, no loadable skill file, or a clash with an existing tool. The full ranking is in ROUTING.md.
+
+## What is in this repo
+
+| File | What it is |
+| :--- | :--- |
+| USAGE.md | How to call Styx, with examples |
+| ROUTING.md | Full ranking, clash, and combine rules |
+| styx-auto-SKILL.md | Auto mode skill |
+| styx-manual-pick-SKILL.md | Manual Pick mode skill |
+| styx-combine-SKILL.md | Combine mode skill |
+| darren-labs-router-SKILL.md | Original router skill |
+| darren-labs-verify-SKILL.md | Original verification gate |
+| INDEX.md | Skill library index, by category |
+| SECURITY.md | Security and hardening rules |
+| HARDENING.md | What was checked, and what is not in this repo |
+
+This repo contains only Darren Labs original work. Upstream skills, such as ECC, Superpowers, Waza, and REA, remain theirs, under their licenses, and their skill bodies are not copied here.
+
+## Security, in short
+
+- No secrets, keys, tokens, passwords, or signed URLs in this repo.
+- No install scripts, no hooks, no MCP installs, no remote code execution.
+- No personal emails, phone numbers, addresses, internal hosts, or IPs in this repo.
+- Install scope is skill files only. See HARDENING.md for the full check.
+
+## License
+
+Darren Labs original files in this repo are MIT, unless a file says otherwise. Upstream skills are not in this repo, so their licenses do not apply here.
